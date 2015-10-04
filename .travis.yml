@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 2.2.3
+
+before_script:
+  - psql -c 'create database skillgrid_test;' -U postgres
+
+addons:
+  code_climate:
+    repo_token: 1c9f708e61f31c2ca4e15c99e7e1641a39a8a9c48af2d94227dc631e19040ef1
+
+notifications:
+  email: false

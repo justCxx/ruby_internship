@@ -1,0 +1,8 @@
+<h1>Product details</h1>
+
+<p>Name: <%= @product.name %></p>
+<p>Description: <%= @product.description %></p>
+<div align="center">
+  <%= image_tag @product.image.url(:medium) %>
+</div>
+<%= link_to "Remove", product_path(@product), method: :delete %>

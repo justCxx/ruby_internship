@@ -1,0 +1,32 @@
+<h1>Products</h1>
+
+<div class="panel panel-default">
+  <table class="table">
+    <tr>
+      <th><%= "Name" %></th>
+      <th><%= "Description" %></th>
+      <th><%= "Shop" %></th>
+
+    </tr>
+
+    <% @products.each do |product| %>
+      <tr>
+        <td>
+          <%= link_to product.name, product_path(product) %>
+          <%= "PRO" if product.pro? %>
+        </td>
+        <td><%= product.description %></td>
+        <td><%= product.shop_name %></td>
+
+        <% if current_user && current_user.account.is_a?(Admin) %>
+          <td><%= link_to "Make PRO", set_pro_product_path(product), method: :put %></td>
+        <% elsif current_user && current_user.account.is_a?(ShopOwner) %>
+          <td><%= link_to "Edit", edit_product_path(product) %></td>
+          <td><%= link_to "Destroy", product_path(product), method: :delete %></td>
+        <% elsif current_user && current_user.account.is_a?(Guest) %>
+          <td><%= link_to "Buy", buy_product_path(product) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>

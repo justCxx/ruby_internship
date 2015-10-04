@@ -2,13 +2,41 @@
 <html>
 <head>
   <title>RubyInternship</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
 
-<%= yield %>
+<body>
+<section id="container">
+  <h1>Ruby internship 2015</h1>
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <% if user_signed_in? %>
+        <p class="navbar-text"><%= current_user.email %></p>
+        <p class="navbar-text"><%= link_to "Logout", destroy_user_session_path, method: :delete if current_user %></p>
+      <% else %>
+        <p class="navbar-text"><%= link_to "Sign In", new_user_session_path %></p>
+        <p class="navbar-text"><%= link_to "Sign Up", new_user_registration_path %></p>
+      <% end %>
+      <p class="navbar-text"><%= link_to "Products", products_path %></p>
+      <% if current_user && current_user.account.is_a?(ShopOwner) %>
+        <p class="navbar-text"><%= link_to "Add product", new_product_path %></p>
+      <% end %>
+    </div>
+  </nav>
+
+  <p/>
+  <% flash.each do |type, message| %>
+    <div class="alert <%= bootstrap_class_for(type) %>" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <%= yield %>
+</section>
 
 </body>
 </html>
